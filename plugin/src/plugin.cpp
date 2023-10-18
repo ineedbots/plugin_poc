@@ -21,7 +21,7 @@ PluginImplementation* plugin_impl_instance;
 
 extern "C"
 {
-#if _MSC_VER
+#ifdef _WIN32
     __declspec(dllexport)
 #endif
     YourPluginInterface* initialize(YourProjectInterface* impl)
@@ -49,14 +49,14 @@ extern "C"
         plug_impl->version.minor = 0;
         plug_impl->version.patch = 1;
 
-#if _MSC_VER
+#ifdef _WIN32
         strcpy_s(plug_impl->name, "plugin");
 #else
         strncpy(plug_impl->name, "plugin", sizeof(plug_impl->name));
         plug_impl->name[sizeof(plug_impl->name) - 1] = '\0';
 #endif
 
-#if _MSC_VER
+#ifdef _WIN32
         strcpy_s(plug_impl->author, "me");
 #else
         strncpy(plug_impl->author, "me", sizeof(plug_impl->author));

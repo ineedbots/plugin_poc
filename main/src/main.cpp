@@ -5,7 +5,7 @@
 #include <string.h>
 #include <assert.h>
 
-#if _MSC_VER
+#ifdef _WIN32
 #include <windows.h>
 #include <libloaderapi.h>
 #else
@@ -40,7 +40,7 @@ public:
             return nullptr;
         }
 
-#if _MSC_VER
+#ifdef _WIN32
         return GetProcAddress(reinterpret_cast<HMODULE>(handle), sym);
 #else
         return dlsym(handle, sym);
@@ -49,7 +49,7 @@ public:
 
     explicit DlRaiiWrapper(const char* file)
     {
-#if _MSC_VER
+#ifdef _WIN32
         handle = LoadLibrary(file);
 #else
         handle = dlopen(file, RTLD_LAZY);
@@ -61,7 +61,7 @@ public:
         if (handle)
         {
 
-#if _MSC_VER
+#ifdef _WIN32
             FreeLibrary(reinterpret_cast<HMODULE>(handle));
 #else
             dlclose(handle);
@@ -91,7 +91,7 @@ int main(int argc, char* argv[])
 
         for (const auto& f : itr)
         {
-#if _MSC_VER
+#ifdef _WIN32
             if (f.path().extension().string() != ".dll")
 #else
             if (f.path().extension().string() != ".so")
