@@ -23,10 +23,12 @@ extern "C"
 {
 #ifdef _WIN32
     __declspec(dllexport)
+#else
+    __attribute__((visibility("default")))
 #endif
     YourPluginInterface* initialize(YourProjectInterface* impl)
     {
-        if (strncmp(impl->magic, MAGICPROJECT, sizeof(MAGICPROJECT) - 1))
+        if (strncmp(impl->magic, MAGICPROJECT, sizeof(MAGICPROJECT) - 1) || strncmp(impl->magica, MAGICPLUGIN, sizeof(MAGICPLUGIN) - 1))
         {
             std::cerr << "project has bad magic" << std::endl;
             return nullptr;
@@ -51,14 +53,12 @@ extern "C"
 
 #ifdef _WIN32
         strcpy_s(plug_impl->name, "plugin");
+
+        strcpy_s(plug_impl->author, "me");
 #else
         strncpy(plug_impl->name, "plugin", sizeof(plug_impl->name));
         plug_impl->name[sizeof(plug_impl->name) - 1] = '\0';
-#endif
 
-#ifdef _WIN32
-        strcpy_s(plug_impl->author, "me");
-#else
         strncpy(plug_impl->author, "me", sizeof(plug_impl->author));
         plug_impl->author[sizeof(plug_impl->author) - 1] = '\0';
 #endif

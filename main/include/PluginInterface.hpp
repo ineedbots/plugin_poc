@@ -21,6 +21,8 @@ public:
     version_s version = { INTERFACE_VERSION_MAJOR, INTERFACE_VERSION_MINOR, INTERFACE_VERSION_PATCH };
 
     virtual void projectCallbackFunction() = 0;
+
+    char magica[4] = {'G', 'U', 'L', 'P'};
 };
 
 class YourPluginInterface
@@ -32,4 +34,6 @@ public:
     version_s version;
 
     virtual void pluginCallbackFunction() = 0;
+
+    char magica[4] = {'P', 'L', 'U', 'G'};
 };

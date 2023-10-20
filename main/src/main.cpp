@@ -125,7 +125,7 @@ int main(int argc, char* argv[])
                 continue;
             }
 
-            if (strncmp(plugin->magic, MAGICPLUGIN, sizeof(MAGICPLUGIN) - 1))
+            if (strncmp(plugin->magic, MAGICPLUGIN, sizeof(MAGICPLUGIN) - 1) || strncmp(plugin->magica, MAGICPROJECT, sizeof(MAGICPROJECT) - 1))
             {
                 std::cerr << "plugin has bad magic" << std::endl;
                 continue;
